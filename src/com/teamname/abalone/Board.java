@@ -14,24 +14,35 @@ package com.teamname.abalone;
  * For example, the center and left-most spot on this board (marked A) is (0, 4) while the
  * center and right-most spot (marked B) is (8, 4).
  * 
- *     	       8 O O O O O
- *   	      7 O O O O O O
- *  	     6 + + O O O + +
- * 		    5 + + + + + + + +
- *		   4 A + + + + + + + B
- * 		   .3 + + + + + + + + 8
- *  	   ..2 + + @ @ @ + + 7
- *   	   ...1 @ @ @ @ @ @ 6
- *    	   ....0 @ @ @ @ @ 5
- *         .......0 1 2 3 4
+ *             8 O O O O O
+ *            7 O O O O O O
+ *           6 + + O O O + +
+ *          5 + + + + + + + +
+ *         4 A + + + + + + + B
+ *          3 + + + + + + + + 8
+ *           2 + + @ @ @ + + 7
+ *            1 @ @ @ @ @ @ 6
+ *             0 @ @ @ @ @ 5
+ *                0 1 2 3 4
  * 
  * Each tile is adjacent to 6 others in the directions:
  * 
- * 			NW     NE
- * 			   \ /
- * 		   W  - + -  E
- * 			   / \
- * 			SW     SE
+ *          NW     NE
+ *             \ /
+ *         W  - + -  E
+ *             / \
+ *          SW     SE
+ * 
+ * In memory, the board contents are represented as a 2D array of ints:
+ * 	board[8] = {2, 2, 2, 2, 2}
+ * 	board[7] = {2, 2, 2, 2, 2, 2}
+ * 	board[6] = {0, 0, 2, 2, 2, 0, 0}
+ * 	board[7] = {0, 0, 0, 0, 0, 0, 0, 0}
+ * 	...
+ * 	board[Y] = {x0, x1, x2, ...}
+ * 	...
+ * 	board[0] = {1, 1, 1, 1, 1}
+ * 
  * 
  * 
  * @author Zachary Potter
@@ -146,7 +157,7 @@ public class Board {
 			System.out.println();
 		}
 		// Print bottom x axis numbers
-		for (int s = 0; s < MIN; s++) {
+		for (int s = 0; s <= MIN; s++) {
 			System.out.print(" ");
 		}
 		for (int x = 0; x < MIN; x++) {
