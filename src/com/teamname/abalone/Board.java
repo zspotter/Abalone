@@ -2,47 +2,45 @@ package com.teamname.abalone;
 
 
 /**
- * 
- * 
- * 
  * The board is represented on two axes that are 120 degrees from each other.
  * The coordinates are of the form (x, y) where the Y-axis is horizontal to
  * the board and the X-axis is at an angle -30 degrees from vertical. The
  * positive direction is towards the north and east from the board. The north
  * side of the board is always home to the white marbles.
  * 
- * For example, the center and left-most spot on this board (marked A) is (0, 4) while the
- * center and right-most spot (marked B) is (8, 4).
+ * For example, the center and left-most spot on this board (marked A) is
+ * (0, 4) while the center and right-most spot (marked B) is (8, 5).
  * 
  *             8 O O O O O
  *            7 O O O O O O
  *           6 + + O O O + +
- *          5 + + + + + + + +
- *         4 A + + + + + + + B
+ *          5 + + + + + + + B
+ *         4 A + + + + + + + +
  *          3 + + + + + + + + 8
  *           2 + + @ @ @ + + 7
  *            1 @ @ @ @ @ @ 6
  *             0 @ @ @ @ @ 5
  *                0 1 2 3 4
  * 
- * Each tile is adjacent to 6 others in the directions:
+ * In memory, the board contents are represented as a 2D array of ints:
+ * 
+ * 	board[8] = {2, 2, 2, 2, 2}
+ * 	board[7] = {2, 2, 2, 2, 2, 2}
+ * 	board[6] = {0, 0, 2, 2, 2, 0, 0}
+ * 	board[5] = {0, 0, 0, 0, 0, 0, 0, B}
+ * 	board[4] = {A, 0, 0, 0, 0, 0, 0, 0, 0}
+ *  board[3] = {0, 0, 0, 0, 0, 0, 0, 0}
+ *  board[2] = {0, 0, 1, 1, 1, 0, 0}
+ *  board[1] = {1, 1, 1, 1, 1, 1}
+ * 	board[0] = {1, 1, 1, 1, 1}
+ * 
+ * Each non-edge tile is adjacent to 6 others in the directions:
  * 
  *          NW     NE
  *             \ /
  *         W  - + -  E
  *             / \
  *          SW     SE
- * 
- * In memory, the board contents are represented as a 2D array of ints:
- * 	board[8] = {2, 2, 2, 2, 2}
- * 	board[7] = {2, 2, 2, 2, 2, 2}
- * 	board[6] = {0, 0, 2, 2, 2, 0, 0}
- * 	board[7] = {0, 0, 0, 0, 0, 0, 0, 0}
- * 	...
- * 	board[Y] = {x0, x1, x2, ...}
- * 	...
- * 	board[0] = {1, 1, 1, 1, 1}
- * 
  * 
  * 
  * @author Zachary Potter
@@ -54,9 +52,9 @@ public class Board {
 	public static final int SW = 0;
 	public static final int W = 1;
 	public static final int NW = 2;
-	public static final int NE = 3;
+	public static final int SE = 3;
 	public static final int E = 4;
-	public static final int SE = 5;
+	public static final int NE = 5;
 
 	/** Constants that define states of any spot on the board. */
 	public static final int EMPTY = 0;
@@ -85,33 +83,48 @@ public class Board {
 		setupBoard();
 	}
 
+	public Board(Board src) {
+		board = new int[MAX][];
+		for (int i = 0; i < MAX; i++) {
+			board[i] = src.board[i].clone();
+		}
+	}
+
 	/**
 	 * Sets the state of the board to the initial player starting state.
 	 */
-	public void setupBoard() {
+	private void setupBoard() {
 		for (int y = 0; y < board.length; y++) {
-			for (int x = 0; x < board[y].length; x++) {
-				set(x, y, EMPTY);
+			for (int x = 0; x < lengthOf(y); x++) {
+				board[y][x] = EMPTY;
 			}
 		}
 
-		for (int x = 0; x < MIN; x++) set(x, 0, BLACK);
-		for (int x = 0; x < MIN + 1; x++) set(x, 1, BLACK);
+		for (int x = 0; x < lengthOf(0); x++) set(x, 0, BLACK);
+		for (int x = 0; x < lengthOf(1); x++) set(x, 1, BLACK);
 		set(2, 2, BLACK); set(3, 2, BLACK); set(4, 2, BLACK);
 
-		for (int x = 0; x < MIN; x++) set(x, 8, WHITE);
-		for (int x = 0; x < MIN + 1; x++) set(x, 7, WHITE);
-		set(2, 6, WHITE); set(3, 6, WHITE); set(4, 6, WHITE);
+		for (int x = 0; x < lengthOf(8); x++) set(x + 4, 8, WHITE);
+		for (int x = 0; x < lengthOf(7); x++) set(x + 3, 7, WHITE);
+		set(4, 6, WHITE); set(5, 6, WHITE); set(6, 6, WHITE);
 	}
 
 	public int get(int x, int y) {
-		return board[y][x];
+		if (y < MIN) {
+			return board[y][x];
+		} else {
+			return board[y][x - y + MIN - 1];
+		}
 	}
 
 	public void set(int x, int y, int state) {
 		if (state != BLACK && state != WHITE && state != EMPTY)
 			throw new IllegalArgumentException("Unknown state: "+state);
-		board[y][x] = state;
+		if (y < MIN) {
+			board[y][x] = state;
+		} else {
+			board[y][x - y + MIN - 1] = state;
+		}
 	}
 
 	/**
@@ -120,6 +133,61 @@ public class Board {
 	 */
 	public int lengthOf(int y) {
 		return board[y].length;
+	}
+
+	public int startOf(int y) {
+		if (y < MIN) {
+			return 0;
+		} else {
+			return y - MIN + 1;
+		}
+	}
+
+	public int endOf(int y) {
+		if (y < MIN) {
+			return board[y].length - 1;
+		} else {
+			return MAX - 1;
+		}
+	}
+
+	public int getRelative(int x, int y, int dir) {
+		int[] rel = getRelativeCoords(x, y, dir);
+		return this.get(rel[0], rel[1]);
+	}
+
+	public void setRelative(int x, int y, int dir, int state) {
+		int[] rel = getRelativeCoords(x, y, dir);
+		this.set(rel[0], rel[1], state);
+	}
+
+	/**
+	 * @param x source
+	 * @param y source
+	 * @param dir Board.dir
+	 * @return A pair of ints, representing the relative coordinate.
+	 */
+	public static int[] getRelativeCoords(int x, int y, int dir) {
+		switch (dir) {
+		case SW:
+			return new int[]{ x - 1, y - 1};
+		case W:
+			return new int[]{ x - 1, y};
+		case NW:
+			return new int[]{ x, y + 1};
+		case NE:
+			return new int[]{ x + 1, y + 1};
+		case E:
+			return new int[]{ x + 1, y};
+		case SE:
+			return new int[]{ x, y - 1};
+		default:
+			throw new IllegalArgumentException("Unknown direction: "+dir);
+		}
+	}
+
+	public static int getOppositeDirectionOf(int dir) {
+		return NE - dir;
 	}
 
 	/**
@@ -136,11 +204,11 @@ public class Board {
 			// Print the y axis number
 			System.out.print(y);
 			// Print the board values
-			for(int x = 0; x < lengthOf(y); x++) {
+			for(int x = startOf(y); x <= endOf(y); x++) {
 				int marbleInt = get(x, y);
 				char marble;
 				if (marbleInt == EMPTY) {
-					marble = '+';
+					marble = '·';
 				} else if (marbleInt == BLACK) {
 					marble = '@';
 				} else if (marbleInt == WHITE) {
