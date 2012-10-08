@@ -210,9 +210,9 @@ public class Board {
 				if (marbleInt == EMPTY) {
 					marble = "·";
 				} else if (marbleInt == BLACK) {
-					marble = "⬢";
+					marble = "@";
 				} else if (marbleInt == WHITE) {
-					marble = "⬡";
+					marble = "O";
 				} else {
 					throw new IllegalStateException();
 				}
