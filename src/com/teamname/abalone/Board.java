@@ -14,13 +14,13 @@ package com.teamname.abalone;
  *             8 O O O O O
  *            7 O O O O O O
  *           6 + + O O O + +
- *          5 + + + + + + + B
- *         4 A + + + + + + + +
- *          3 + + + + + + + + 8
+ *      |   5 + + + + + + + B
+ *      Y  4 A + + + + + + + +
+ *      |   3 + + + + + + + + 8
  *           2 + + @ @ @ + + 7
  *            1 @ @ @ @ @ @ 6
- *             0 @ @ @ @ @ 5
- *                0 1 2 3 4
+ *             0 @ @ @ @ @ 5      /
+ *                0 1 2 3 4   __ X
  * 
  * In memory, the board contents are represented as a 2D array of ints:
  * 
@@ -128,13 +128,15 @@ public class Board {
 	}
 
 	/**
-	 * @param y The position along the Y axis to get the length of.
-	 * @return A number between Board.MIN and Board.MAX.
+	 * @return How many X values there are on the Y axis given.
 	 */
 	public int lengthOf(int y) {
 		return board[y].length;
 	}
 
+	/**
+	 * @return The starting X index on the Y axis given.
+	 */
 	public int startOf(int y) {
 		if (y < MIN) {
 			return 0;
@@ -143,6 +145,9 @@ public class Board {
 		}
 	}
 
+	/**
+	 * @return The last X index on the Y axis given.
+	 */
 	public int endOf(int y) {
 		if (y < MIN) {
 			return board[y].length - 1;
@@ -159,6 +164,13 @@ public class Board {
 	public void setRelative(int x, int y, int dir, int state) {
 		int[] rel = getRelativeCoords(x, y, dir);
 		this.set(rel[0], rel[1], state);
+	}
+
+	/**
+	 * @return True iff the given coord lies on the board.
+	 */
+	public boolean onBoard(int x, int y) {
+		return (x >= startOf(y) && x <= endOf(y));
 	}
 
 	/**

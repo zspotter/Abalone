@@ -19,6 +19,12 @@ public class GameMaster {
 		// Make sure a valid number of marbles are being moved.
 		if (move.getMarbles().length > MAX_MARBLES
 				|| move.getMarbles().length <= 0) return false;
+		// Make sure all the marbles are the right color.
+		for (int[] marble : move.getMarbles()) {
+			if (board.get(marble[0], marble[1]) != move.getColor()) {
+				return false;
+			}
+		}
 
 		int dir = move.getDirection();
 		int[][] marbles = move.getMarbles();
@@ -54,12 +60,13 @@ public class GameMaster {
 			int[] head = null;
 			int[] tail = null;
 			for (int[] marble : marbles) {
-				if (head == null && copy.getRelative(
-						marble[0], marble[1], dir) != playerColor) {
+				int[] rel = Board.getRelativeCoords(marble[0], marble[1], dir);
+				if (head == null && (!copy.onBoard(rel[0], rel[1])
+						|| copy.get(rel[0], rel[1]) != playerColor)) {
 					head = marble;
 				}
 				if (tail == null) {
-					int[] rel = Board.getRelativeCoords(marble[0], marble[1],
+					rel = Board.getRelativeCoords(marble[0], marble[1],
 							Board.getOppositeDirectionOf(dir));
 					boolean isTail = true;
 					for (int[] m : marbles) {
@@ -77,6 +84,10 @@ public class GameMaster {
 			int opp = marbles.length - 1;
 			int[] oppHead = Board.getRelativeCoords(head[0], head[1], dir);
 			while (opp > 0) {
+				if (!copy.onBoard(oppHead[0], oppHead[1])) {
+					// Pushing one opponent marble off the board. Special case.
+					break;
+				}
 				if (copy.get(oppHead[0], oppHead[1]) == Board.EMPTY) {
 					break;
 				}
@@ -87,16 +98,19 @@ public class GameMaster {
 				oppHead = Board.getRelativeCoords(oppHead[0], oppHead[1], dir);
 				opp--;
 			}
-			if (copy.get(oppHead[0], oppHead[1]) != Board.EMPTY) {
+			if (copy.onBoard(oppHead[0], oppHead[1]) && copy.get(oppHead[0], oppHead[1]) != Board.EMPTY) {
 				// Too many opponent marbles to push. Bad move.
 				return false;
 			}
-			if (opp != marbles.length - 1) {
+			if (copy.onBoard(oppHead[0], oppHead[1]) && opp != marbles.length - 1) {
 				copy.set(oppHead[0], oppHead[1], opponentColor);
 			}
 			// Push own marbles.
 			copy.set(tail[0], tail[1], Board.EMPTY);
-			copy.setRelative(head[0], head[1], dir, playerColor);
+			int[] newHead = Board.getRelativeCoords(head[0], head[1], dir);
+			if (copy.onBoard(newHead[0], newHead[1])) {
+				copy.setRelative(head[0], head[1], dir, playerColor);
+			}
 		} else {
 			// Broadside slide.
 			for (int[] marble : marbles) {
