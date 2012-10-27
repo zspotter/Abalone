@@ -1,11 +1,11 @@
 package edu.rit.datacom.abalone.common;
 
 /**
- * An interface representing the state of the board. Shared by server and client.
+ * The "model" and "model proxy" for the server and client to implement.
  * @author Zachary Potter
  *
  */
-public interface GameState {
+public interface GameMaster {
 
 	/**
 	 * @return The state of the board.

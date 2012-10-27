@@ -1,11 +1,12 @@
 package edu.rit.datacom.abalone.client;
 
+
 /**
- * The client program launcher.
+ * The client "view".
  * 
  * @author Zachary Potter
  *
  */
-public class AbaloneClient {
+public class GameView {
 
 }

@@ -1,10 +1,16 @@
 package edu.rit.datacom.abalone.server;
 
 import edu.rit.datacom.abalone.common.Board;
-import edu.rit.datacom.abalone.common.GameState;
+import edu.rit.datacom.abalone.common.GameMaster;
 import edu.rit.datacom.abalone.common.Move;
 
-public class GameMaster implements GameState {
+/**
+ * The server "model".
+ * 
+ * @author Zachary Potter
+ *
+ */
+public class GameModel implements GameMaster {
 
 	// Maximum number of the player's marbles that can be moved per turn.
 	public static final int MAX_MARBLES = 3;
@@ -16,7 +22,7 @@ public class GameMaster implements GameState {
 
 	private Board board;
 
-	public GameMaster() {
+	public GameModel() {
 		board = new Board();
 		numBlack = board.countBlack();
 		numWhite = board.countWhite();

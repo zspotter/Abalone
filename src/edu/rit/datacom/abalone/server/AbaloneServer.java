@@ -4,6 +4,8 @@ import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.Move;
 
 /**
+ * The server launcher and session manager.
+ * 
  * 
  * AbaloneServer Messages:
  * 
@@ -25,7 +27,7 @@ import edu.rit.datacom.abalone.common.Move;
 public class AbaloneServer {
 
 	public static void main(String[] args) {
-		GameMaster game = new GameMaster();
+		GameModel game = new GameModel();
 
 		game.getBoard().printBoard();
 
