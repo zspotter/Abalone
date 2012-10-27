@@ -1,4 +1,4 @@
-package com.teamname.abalone;
+package edu.rit.datacom.abalone.common;
 
 
 /**
@@ -171,6 +171,32 @@ public class Board {
 	 */
 	public boolean onBoard(int x, int y) {
 		return (x >= startOf(y) && x <= endOf(y));
+	}
+
+	/**
+	 * @return The number of white marbles on the board.
+	 */
+	public int countWhite() {
+		int count = 0;
+		for(int[] row : board) {
+			for(int m : row) {
+				if (m == WHITE) count++;
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * @return The number of black marbles on the board.
+	 */
+	public int countBlack() {
+		int count = 0;
+		for(int[] row : board) {
+			for(int m : row) {
+				if (m == BLACK) count++;
+			}
+		}
+		return count;
 	}
 
 	/**

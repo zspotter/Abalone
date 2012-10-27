@@ -1,8 +1,11 @@
-package com.teamname.abalone;
+package edu.rit.datacom.abalone.server;
+
+import edu.rit.datacom.abalone.common.Board;
+import edu.rit.datacom.abalone.common.Move;
 
 /**
  * 
- * Abalone Messages:
+ * AbaloneServer Messages:
  * 
  * Client:
  * createGame(game id): Request to create a new game with a custom game id
@@ -19,83 +22,83 @@ package com.teamname.abalone;
  * @author Zachary Potter
  * 
  */
-public class Abalone {
+public class AbaloneServer {
 
 	public static void main(String[] args) {
 		GameMaster game = new GameMaster();
 
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		/* pushing tests */
 		game.makeMove(new Move(Board.BLACK, Board.NE,
 				new int[][]{ {0,0}, {1,1}, {2,2} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.WHITE, Board.W,
 				new int[][]{ {4,6}, {5,6}, {6,6} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.BLACK, Board.NE,
 				new int[][]{ {1,1}, {2,2}, {3,3} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.WHITE, Board.SW,
 				new int[][]{ {3,6} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.BLACK, Board.NE,
 				new int[][]{ {2,2}, {3,3}, {4,4} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.WHITE, Board.SW,
 				new int[][]{ {2,5} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.BLACK, Board.NE,
 				new int[][]{ {3,3}, {4,4}, {5,5} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.WHITE, Board.SW,
 				new int[][]{ {1,4} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.BLACK, Board.NE,
 				new int[][]{ {4,4}, {5,5}, {6,6} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.WHITE, Board.SW,
 				new int[][]{ {8,7} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.BLACK, Board.NE,
 				new int[][]{ {5,5}, {6,6}, {7,7} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.WHITE, Board.E,
 				new int[][]{ {5,7}, {6,7} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.BLACK, Board.NE,
 				new int[][]{ {8,8} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 		game.makeMove(new Move(Board.WHITE, Board.SE,
 				new int[][]{ {0,3} }));
 		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
+		game.getBoard().printBoard();
 
 
 

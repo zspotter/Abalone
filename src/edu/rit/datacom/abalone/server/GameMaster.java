@@ -1,9 +1,16 @@
-package com.teamname.abalone;
+package edu.rit.datacom.abalone.server;
 
-public class GameMaster {
+import edu.rit.datacom.abalone.common.Board;
+import edu.rit.datacom.abalone.common.GameState;
+import edu.rit.datacom.abalone.common.Move;
+
+public class GameMaster implements GameState {
 
 	// Maximum number of the player's marbles that can be moved per turn.
 	public static final int MAX_MARBLES = 3;
+
+	private int numBlack;
+	private int numWhite;
 
 	private int playerColor = Board.BLACK;
 
@@ -11,6 +18,8 @@ public class GameMaster {
 
 	public GameMaster() {
 		board = new Board();
+		numBlack = board.countBlack();
+		numWhite = board.countWhite();
 	}
 
 	public boolean makeMove(Move move) {
@@ -126,6 +135,8 @@ public class GameMaster {
 
 		// If the move was successfully made, update the current board.
 		board = copy;
+		numBlack = board.countBlack();
+		numWhite = board.countWhite();
 
 		// Update who should go next.
 		playerColor = opponentColor;
@@ -153,8 +164,19 @@ public class GameMaster {
 		return true;
 	}
 
-	public Board getBoardCopy() {
-		return new Board(board);
+	@Override
+	public Board getBoard() {
+		return board;
+	}
+
+	@Override
+	public int getWhiteCount() {
+		return numWhite;
+	}
+
+	@Override
+	public int getBlackCount() {
+		return numBlack;
 	}
 
 }

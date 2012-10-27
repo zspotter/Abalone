@@ -1,4 +1,4 @@
-package com.teamname.abalone;
+package edu.rit.datacom.abalone.common;
 
 /**
  * Represents an immutable player move.
