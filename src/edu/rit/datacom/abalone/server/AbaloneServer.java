@@ -6,20 +6,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class AbaloneServer {
-	
+
 	public AbaloneServer(String host, int port) throws IOException
 	{
-        ServerSocket serversocket = new ServerSocket();
-        serversocket.bind (new InetSocketAddress (host, port));
+		ServerSocket serversocket = new ServerSocket();
+		serversocket.bind (new InetSocketAddress (host, port));
 
-        SessionManager manager = new SessionManager();
+		SessionManager manager = new SessionManager();
 
-        while(true)
-            {
-            Socket socket = serversocket.accept();
-            ViewProxy proxy = new ViewProxy (socket);
-            proxy.setViewListener (manager);
-            }
-    }
+		while(true)
+		{
+			Socket socket = serversocket.accept();
+			ViewProxy proxy = new ViewProxy (socket);
+			proxy.setViewListener (manager);
+		}
+	}
 
 }
