@@ -1,130 +1,25 @@
 package edu.rit.datacom.abalone.server;
 
-import edu.rit.datacom.abalone.common.Board;
-import edu.rit.datacom.abalone.common.Move;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-/**
- * The server launcher and session manager.
- * 
- * 
- * AbaloneServer Messages:
- * 
- * Client:
- * createGame(game id): Request to create a new game with a custom game id
- * joinGame(game id): Request to join the game indicated by the game id
- * sendMove(move) Send a move request
- * leaveGame() Sent when quiting a game
- * 
- * Server:
- * joinedGame(color): Sent as a response to createGame or joinGame. Notifies the player with their color
- * updateBoard(board): Sent after either player moved or upon joining/creating a game
- * rejectMove(): Sent in response to a bad move request
- * leftGame(color): Sent when a player quits or is being kicked by the server
- * 
- * @author Zachary Potter
- * 
- */
 public class AbaloneServer {
+	
+	public AbaloneServer(String host, int port) throws IOException
+	{
+        ServerSocket serversocket = new ServerSocket();
+        serversocket.bind (new InetSocketAddress (host, port));
 
-	public static void main(String[] args) {
-		GameModel game = new GameModel();
+        SessionManager manager = new SessionManager();
 
-		game.getBoard().printBoard();
-
-		/* pushing tests */
-		game.makeMove(new Move(Board.BLACK, Board.NE,
-				new int[][]{ {0,0}, {1,1}, {2,2} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.WHITE, Board.W,
-				new int[][]{ {4,6}, {5,6}, {6,6} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.BLACK, Board.NE,
-				new int[][]{ {1,1}, {2,2}, {3,3} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.WHITE, Board.SW,
-				new int[][]{ {3,6} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.BLACK, Board.NE,
-				new int[][]{ {2,2}, {3,3}, {4,4} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.WHITE, Board.SW,
-				new int[][]{ {2,5} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.BLACK, Board.NE,
-				new int[][]{ {3,3}, {4,4}, {5,5} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.WHITE, Board.SW,
-				new int[][]{ {1,4} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.BLACK, Board.NE,
-				new int[][]{ {4,4}, {5,5}, {6,6} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.WHITE, Board.SW,
-				new int[][]{ {8,7} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.BLACK, Board.NE,
-				new int[][]{ {5,5}, {6,6}, {7,7} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.WHITE, Board.E,
-				new int[][]{ {5,7}, {6,7} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.BLACK, Board.NE,
-				new int[][]{ {8,8} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-		game.makeMove(new Move(Board.WHITE, Board.SE,
-				new int[][]{ {0,3} }));
-		System.out.println("\n==========\n");
-		game.getBoard().printBoard();
-
-
-
-		/* simple movement tests
-		game.makeMove(new Move(Board.BLACK, Board.NE,
-				new int[][]{ {2,2}, {3,2}, {4,2} }));
-		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
-
-		game.makeMove(new Move(Board.WHITE, Board.SW,
-				new int[][]{ {7,8}, {6,7}, {5,6} }));
-		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
-
-		game.makeMove(new Move(Board.BLACK, Board.NW,
-				new int[][]{ {3,3}, {4,3} }));
-		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
-
-		game.makeMove(new Move(Board.WHITE, Board.SW,
-				new int[][]{ {5,6}, {4,5} }));
-		System.out.println("\n==========\n");
-		game.getBoardCopy().printBoard();
-		 */
-	}
+        while(true)
+            {
+            Socket socket = serversocket.accept();
+            ViewProxy proxy = new ViewProxy (socket);
+            proxy.setViewListener (manager);
+            }
+    }
 
 }
