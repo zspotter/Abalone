@@ -11,7 +11,7 @@ public class AbaloneClient {
         socket.connect (new InetSocketAddress (host, port));
 
         ModelClone model = new ModelClone();
-        GoUI view = new GoUI (session, model.getBoard());
+        //GoUI view = new GoUI (session, model.getBoard());
         ModelProxy proxy = new ModelProxy (socket);
         model.setModelListener (view);
         view.setViewListener (proxy);

@@ -66,10 +66,31 @@ public class ModelProxy implements ViewListener {
             {
             while(true)
                 {
-                int r, c, color;
+                int x, y, color, session;
                 byte b = _in.readByte();
                 switch (b)
                     {
+                    case 'J':
+                    	session = _in.readByte();
+                    	_modelClone.joinedGame(session);
+                    	break;
+                    case 'U':
+                    	_modelClone.updateBoard();
+                    	break;
+                    case 'R':
+                    	_modelClone.rejectMove();
+                    	break;
+                    	
+                    case 'L':
+                    	_modelClone.leftGame();
+                    	break;
+                    	
+                    case 'M':
+                 	   x = _in.readByte();
+                 	   y = _in.readByte();
+                 	   color = _in.readByte();
+                 	   _modelClone.makeMove(x, y, color);
+                    	break;
 
                     default:
                         System.err.println ("Bad message");

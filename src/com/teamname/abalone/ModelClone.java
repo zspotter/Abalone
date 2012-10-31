@@ -16,15 +16,14 @@ public class ModelClone implements ModelListener {
 	}
 
 	@Override
-	public void joinedGame(int color) {
-		// TODO Auto-generated method stub
+	public void joinedGame(int session) throws IOException {
+		_modelListener.joinedGame(session);
 		
 	}
 
 	@Override
-	public void updateBoard() {
-		// TODO Auto-generated method stub
-		
+	public void updateBoard() throws IOException {
+		_modelListener.updateBoard();
 	}
 
 	@Override
@@ -41,8 +40,8 @@ public class ModelClone implements ModelListener {
 
 	@Override
 	public void makeMove(int x, int y, int color) throws IOException {
-		// TODO Auto-generated method stub
-		
+		_modelListener.makeMove(x, y, color);
+		_board.set(x, y, color); // This may or may not be correct
 	}
 
 }

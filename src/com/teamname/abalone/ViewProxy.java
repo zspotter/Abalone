@@ -32,33 +32,40 @@ public class ViewProxy implements ModelListener {
 	}
 
 	@Override
-	public void joinedGame(int color) {
-		// TODO Auto-generated method stub
+	public void joinedGame(int session) throws IOException {
+		_out.writeByte ('J');
+        _out.writeInt(session);
+        _out.flush();
+	}
+
+	@Override
+	public void updateBoard() throws IOException {
+		_out.writeByte ('U');
+        _out.flush();
 		
 	}
 
 	@Override
-	public void updateBoard() {
-		// TODO Auto-generated method stub
+	public void rejectMove() throws IOException {
+		_out.writeByte ('R');
+        _out.flush();
 		
 	}
 
 	@Override
-	public void rejectMove() {
-		// TODO Auto-generated method stub
+	public void leftGame() throws IOException {
+		_out.writeByte ('L');
+        _out.flush();
 		
 	}
 
 	@Override
-	public void leftGame() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void makeMove(int x, int y, int color) {
-		// TODO Auto-generated method stub
-		
+	public void makeMove(int x, int y, int color) throws IOException {
+		_out.writeByte ('M');
+        _out.writeInt(x);
+        _out.writeInt(y);
+        _out.writeInt(color);
+        _out.flush();
 	}
 	
 	   private class ReaderThread
@@ -76,20 +83,24 @@ public class ViewProxy implements ModelListener {
                        {
                        case 'J':
                     	   session = _in.readByte();
+                    	   _viewListener.joinGame(ViewProxy.this, session);
                     	   break;
                     	   
                        case 'M':
                     	   x = _in.readByte();
                     	   y = _in.readByte();
                     	   color = _in.readByte();
+                    	   _viewListener.sendMove(x, y, color);
                     	   break;
                     	   
                        case 'L':
                     	   session = _in.readByte();
+                    	   _viewListener.leaveGame(session);
                     	   break;
                     	   
                        case 'R':
                     	   session = _in.readByte();
+                    	   _viewListener.resetBoard(session);
                     	   break;
                       
                        default:
