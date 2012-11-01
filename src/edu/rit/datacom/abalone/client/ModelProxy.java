@@ -5,21 +5,22 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import edu.rit.datacom.abalone.common.ViewListener;
 import edu.rit.datacom.abalone.server.ViewProxy;
 
 public class ModelProxy implements ViewListener {
-	
 
-    private Socket _socket;
-    private DataOutputStream _out;
-    private DataInputStream _in;
-    private ModelClone _modelClone;
+
+	private Socket _socket;
+	private DataOutputStream _out;
+	private DataInputStream _in;
+	private ModelClone _modelClone;
 
 	public ModelProxy(Socket socket) throws IOException {
-        _socket = socket;
-        _out = new DataOutputStream (_socket.getOutputStream());
-        _in = new DataInputStream (_socket.getInputStream());
-		
+		_socket = socket;
+		_out = new DataOutputStream (_socket.getOutputStream());
+		_in = new DataInputStream (_socket.getInputStream());
+
 	}
 
 	public void setModelListener(ModelClone model) {
@@ -28,10 +29,10 @@ public class ModelProxy implements ViewListener {
 
 	@Override
 	public void joinGame(ViewProxy proxy, int session) throws IOException  {
-        _out.writeByte ('J');
-        _out.writeInt(session);
-        _out.flush();
-		
+		_out.writeByte ('J');
+		_out.writeInt(session);
+		_out.flush();
+
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class ModelProxy implements ViewListener {
 		_out.writeInt(y);
 		_out.writeInt(color);
 		_out.flush();
-		
+
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class ModelProxy implements ViewListener {
 		_out.writeByte('L');
 		_out.writeInt(gameid);
 		_out.flush();
-		
+
 	}
 
 	@Override
@@ -58,58 +59,49 @@ public class ModelProxy implements ViewListener {
 		_out.writeInt(gameid);
 		_out.flush();
 	}
-	
-	private class ReaderThread
-    extends Thread
-    {
-    public void run()
-        {
-        try
-            {
-            while(true)
-                {
-                int x, y, color, session;
-                byte b = _in.readByte();
-                switch (b)
-                    {
-                    case 'J':
-                    	session = _in.readByte();
-                    	_modelClone.joinedGame(session);
-                    	break;
-                    case 'U':
-                    	_modelClone.updateBoard();
-                    	break;
-                    case 'R':
-                    	_modelClone.rejectMove();
-                    	break;
-                    	
-                    case 'L':
-                    	_modelClone.leftGame();
-                    	break;
-                    	
-                    case 'M':
-                 	   x = _in.readByte();
-                 	   y = _in.readByte();
-                 	   color = _in.readByte();
-                 	   _modelClone.makeMove(x, y, color);
-                    	break;
 
-                    default:
-                        System.err.println ("Bad message");
-                        break;
-                    }
-                }
-            }
-        catch (IOException exc){}
-        finally
-            {
-            try
-                {
-                _socket.close();
-                }
-            catch (IOException exc){}
-            }
-        }
-    }
+	private class ReaderThread
+	extends Thread
+	{
+		@Override
+		public void run()
+		{
+			try
+			{
+				while(true)
+				{
+					int x, y, color, session;
+					byte b = _in.readByte();
+					switch (b)
+					{
+					case 'J':
+						session = _in.readByte();
+						_modelClone.joinedGame(session);
+						break;
+					case 'U':
+						_modelClone.updateBoard();
+						break;
+					case 'R':
+						_modelClone.rejectMove();
+						break;
+
+					case 'L':
+						_modelClone.leaveGame();
+						break;
+					default:
+						// Ignore bad messages.
+						break;
+					}
+				}
+			}
+			catch (IOException exc){
+				try
+				{
+					_socket.close();
+				}
+				catch (IOException exc2){}
+			}
+		}
+	}
 
 }
