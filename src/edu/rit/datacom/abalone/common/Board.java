@@ -1,7 +1,5 @@
 package edu.rit.datacom.abalone.common;
 
-import java.io.Serializable;
-
 
 /**
  * The board is represented on two axes that are 120 degrees from each other.
@@ -43,11 +41,12 @@ import java.io.Serializable;
  *         W  - + -  E
  *             / \
  *          SW     SE
+ * 
+ * 
+ * @author Zachary Potter
  *
  */
-public class Board implements Serializable {
-
-	private static final long serialVersionUID = -1930685413157092363L;
+public class Board {
 
 	/** Constants that define direction. */
 	public static final int SW = 0;

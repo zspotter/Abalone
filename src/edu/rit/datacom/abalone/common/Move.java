@@ -1,13 +1,12 @@
 package edu.rit.datacom.abalone.common;
 
-import java.io.Serializable;
-
 /**
  * Represents an immutable player move.
+ * 
+ * @author Zachary Potter
+ *
  */
-public class Move implements Serializable {
-
-	private static final long serialVersionUID = 5088432699229762217L;
+public class Move {
 
 	private final int color;
 	private final int direction;
