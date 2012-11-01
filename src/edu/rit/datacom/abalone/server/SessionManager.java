@@ -3,7 +3,7 @@ package edu.rit.datacom.abalone.server;
 import java.io.IOException;
 import java.util.HashMap;
 
-import edu.rit.datacom.abalone.common.message.ResponseJoined;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 
 public class SessionManager {
 

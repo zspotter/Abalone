@@ -1,12 +1,12 @@
 package edu.rit.datacom.abalone.server;
 
+import edu.rit.datacom.abalone.common.AbaloneMessage.RequestJoin;
+import edu.rit.datacom.abalone.common.AbaloneMessage.RequestMove;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
 import edu.rit.datacom.abalone.common.Move;
 import edu.rit.datacom.abalone.common.ViewListener;
-import edu.rit.datacom.abalone.common.message.RequestJoin;
-import edu.rit.datacom.abalone.common.message.RequestMove;
-import edu.rit.datacom.abalone.common.message.ResponseJoined;
 
 public class AbaloneModel implements ViewListener{
 

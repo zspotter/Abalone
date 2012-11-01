@@ -1,16 +1,16 @@
 package edu.rit.datacom.abalone.client;
 
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
-import edu.rit.datacom.abalone.common.message.ResponseBoardUpdate;
-import edu.rit.datacom.abalone.common.message.ResponseJoined;
 
 public class ModelClone implements ModelListener {
 
 	private ModelListener _modelListener;
 	private Board _board;
-	private int _color;
-	private int _turnColor;
+	private int _color = -1;
+	private int _turnColor = -1;
 
 	public void setModelListener(ModelListener modelListener){
 		_modelListener = modelListener;
@@ -20,9 +20,18 @@ public class ModelClone implements ModelListener {
 		return _board;
 	}
 
+	public int getTurnColor() {
+		return _turnColor;
+	}
+
+	public int getPlayerColor() {
+		return _color;
+	}
+
 	@Override
 	public void joinedGame(ResponseJoined msg) {
 		_color = msg.getColor();
+
 		_modelListener.joinedGame(msg);
 	}
 
@@ -30,6 +39,7 @@ public class ModelClone implements ModelListener {
 	public void updateBoard(ResponseBoardUpdate msg) {
 		_board = msg.getBoard();
 		_turnColor = msg.getColor();
+
 		_modelListener.updateBoard(msg);
 	}
 
@@ -40,6 +50,8 @@ public class ModelClone implements ModelListener {
 
 	@Override
 	public void leaveGame() {
+		_turnColor = -1;
+
 		_modelListener.leaveGame();
 	}
 

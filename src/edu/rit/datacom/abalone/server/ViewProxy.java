@@ -5,11 +5,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import edu.rit.datacom.abalone.common.AbaloneMessage;
 import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
 import edu.rit.datacom.abalone.common.ViewListener;
-import edu.rit.datacom.abalone.common.message.ResponseBoardUpdate;
-import edu.rit.datacom.abalone.common.message.ResponseJoined;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 
 public class ViewProxy implements ModelListener {
 
@@ -41,6 +42,7 @@ public class ViewProxy implements ModelListener {
 	@Override
 	public void joinedGame(ResponseJoined msg) {
 		// TODO
+
 	}
 
 	@Override

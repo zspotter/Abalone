@@ -1,7 +1,7 @@
 package edu.rit.datacom.abalone.common;
 
-import edu.rit.datacom.abalone.common.message.RequestJoin;
-import edu.rit.datacom.abalone.common.message.RequestMove;
+import edu.rit.datacom.abalone.common.AbaloneMessage.RequestJoin;
+import edu.rit.datacom.abalone.common.AbaloneMessage.RequestMove;
 
 
 /**

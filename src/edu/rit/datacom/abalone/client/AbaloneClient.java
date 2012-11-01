@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import edu.rit.datacom.abalone.common.message.RequestJoin;
+import edu.rit.datacom.abalone.common.AbaloneMessage.RequestJoin;
 
 public class AbaloneClient {
 

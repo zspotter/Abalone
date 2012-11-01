@@ -5,15 +5,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import edu.rit.datacom.abalone.common.AbaloneMessage;
+import edu.rit.datacom.abalone.common.AbaloneMessage.RequestJoin;
+import edu.rit.datacom.abalone.common.AbaloneMessage.RequestLeave;
+import edu.rit.datacom.abalone.common.AbaloneMessage.RequestMove;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseLeftGame;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseMoveRejected;
 import edu.rit.datacom.abalone.common.ViewListener;
-import edu.rit.datacom.abalone.common.message.AbaloneMessage;
-import edu.rit.datacom.abalone.common.message.RequestJoin;
-import edu.rit.datacom.abalone.common.message.RequestLeave;
-import edu.rit.datacom.abalone.common.message.RequestMove;
-import edu.rit.datacom.abalone.common.message.ResponseBoardUpdate;
-import edu.rit.datacom.abalone.common.message.ResponseJoined;
-import edu.rit.datacom.abalone.common.message.ResponseLeftGame;
-import edu.rit.datacom.abalone.common.message.ResponseMoveRejected;
 
 public class ModelProxy implements ViewListener {
 

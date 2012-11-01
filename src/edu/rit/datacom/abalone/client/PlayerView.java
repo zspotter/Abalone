@@ -1,33 +1,36 @@
 package edu.rit.datacom.abalone.client;
 
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 import edu.rit.datacom.abalone.common.ModelListener;
 import edu.rit.datacom.abalone.common.ViewListener;
-import edu.rit.datacom.abalone.common.message.ResponseBoardUpdate;
-import edu.rit.datacom.abalone.common.message.ResponseJoined;
 
 public class PlayerView implements ModelListener{
+
+	private ViewListener _viewListener;
 
 	public PlayerView() {
 		System.out.println("Joining game...");
 	}
 
 	public void setViewListener(ViewListener viewListener) {
-		//TODO
+		_viewListener = viewListener;
 	}
 
 	@Override
 	public void joinedGame(ResponseJoined msg) {
-		if (msg.hasJoined()) {
+		if (!msg.hasJoined()) {
 			System.out.println("The requested game was full.");
 			quit();
 			return;
 		}
 		System.out.println("Joined game as " + msg.getColor() + "!");
+		System.out.println("Waiting for other player...");
 	}
 
 	@Override
 	public void updateBoard(ResponseBoardUpdate msg) {
-		// TODO Auto-generated method stub
+		// TODO
 
 	}
 
@@ -35,6 +38,7 @@ public class PlayerView implements ModelListener{
 	public void rejectMove() {
 		// TODO Auto-generated method stub
 		System.out.println("Illegal move! Try again.");
+		promptMove();
 	}
 
 	@Override
@@ -42,6 +46,10 @@ public class PlayerView implements ModelListener{
 		// TODO Auto-generated method stub
 		System.out.println("You have been disconnected by the server.");
 		quit();
+	}
+
+	private void promptMove() {
+
 	}
 
 	private void quit() {

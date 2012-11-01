@@ -1,7 +1,8 @@
 package edu.rit.datacom.abalone.common;
 
-import edu.rit.datacom.abalone.common.message.ResponseBoardUpdate;
-import edu.rit.datacom.abalone.common.message.ResponseJoined;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
+
 
 
 /**
