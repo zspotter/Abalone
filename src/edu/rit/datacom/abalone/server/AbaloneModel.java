@@ -4,6 +4,9 @@ import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
 import edu.rit.datacom.abalone.common.Move;
 import edu.rit.datacom.abalone.common.ViewListener;
+import edu.rit.datacom.abalone.common.message.RequestJoin;
+import edu.rit.datacom.abalone.common.message.RequestMove;
+import edu.rit.datacom.abalone.common.message.ResponseJoined;
 
 public class AbaloneModel implements ViewListener{
 
@@ -182,28 +185,28 @@ public class AbaloneModel implements ViewListener{
 		}
 		if (whitePlayer == null) {
 			whitePlayer = player;
-			whitePlayer.joinedGame(Board.WHITE);
+			whitePlayer.joinedGame(new ResponseJoined(Board.WHITE));
 		} else if (blackPlayer == null) {
 			blackPlayer = player;
-			blackPlayer.joinedGame(Board.BLACK);
+			blackPlayer.joinedGame(new ResponseJoined(Board.BLACK));
 		}
 		return true;
 	}
 
 	@Override
-	public void joinGame(String gameid) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void requestMove(Move move) {
+	public void joinGame(RequestJoin gameid) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void leaveGame() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void requestMove(RequestMove msg) {
 		// TODO Auto-generated method stub
 
 	}

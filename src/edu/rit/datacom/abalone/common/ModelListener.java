@@ -1,5 +1,8 @@
 package edu.rit.datacom.abalone.common;
 
+import edu.rit.datacom.abalone.common.message.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.message.ResponseJoined;
+
 
 /**
  * ModelListener is an interface that defines what messages can be sent to the
@@ -10,16 +13,15 @@ public interface ModelListener {
 
 	/**
 	 * Called after a player has joined the game.
-	 * @param color The player color
+	 * @param msg
 	 */
-	public void joinedGame(int color);
+	public void joinedGame(ResponseJoined msg);
 
 	/**
 	 * Called after any move is made or a the game has started.
-	 * @param board The new state of the board.
-	 * @param color The color of the next move.
+	 * @param msg
 	 */
-	public void updateBoard(Board board, int color);
+	public void updateBoard(ResponseBoardUpdate msg);
 
 	/**
 	 * Called in response to a failed move attempt. The current player is

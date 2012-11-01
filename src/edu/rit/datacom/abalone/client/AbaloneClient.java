@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import edu.rit.datacom.abalone.common.message.RequestJoin;
+
 public class AbaloneClient {
 
 	public static void main(String[] args) {
@@ -46,7 +48,7 @@ public class AbaloneClient {
 		model.setModelListener (view);
 		view.setViewListener (proxy);
 		proxy.setModelListener (model);
-		proxy.joinGame (session);
+		proxy.joinGame (new RequestJoin(session));
 	}
 
 }

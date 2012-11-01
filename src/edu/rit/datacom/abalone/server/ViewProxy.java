@@ -8,6 +8,8 @@ import java.net.Socket;
 import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
 import edu.rit.datacom.abalone.common.ViewListener;
+import edu.rit.datacom.abalone.common.message.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.message.ResponseJoined;
 
 public class ViewProxy implements ModelListener {
 
@@ -37,52 +39,23 @@ public class ViewProxy implements ModelListener {
 	}
 
 	@Override
-	public void joinedGame(int color) {
-		try {
-			_out.writeByte (MSG_JOIN);
-			_out.writeInt(color);
-			_out.flush();
-			_color = color;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void joinedGame(ResponseJoined msg) {
+		// TODO
 	}
 
 	@Override
-	public void updateBoard(Board board, int color) {
-		try {
-			_out.writeByte (MSG_UPDATE);
-			_out.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+	public void updateBoard(ResponseBoardUpdate msg) {
+		// TODO
 	}
 
 	@Override
 	public void rejectMove() {
-		try {
-			_out.writeByte (MSG_REJECT);
-			_out.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		// TODO
 	}
 
 	@Override
 	public void leaveGame() {
-		try {
-			_out.writeByte (MSG_LEAVE);
-			_out.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		// TODO
 	}
 
 	/**

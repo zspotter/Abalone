@@ -2,6 +2,8 @@ package edu.rit.datacom.abalone.client;
 
 import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
+import edu.rit.datacom.abalone.common.message.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.message.ResponseJoined;
 
 public class ModelClone implements ModelListener {
 
@@ -19,16 +21,16 @@ public class ModelClone implements ModelListener {
 	}
 
 	@Override
-	public void joinedGame(int color) {
-		_color = color;
-		_modelListener.joinedGame(color);
+	public void joinedGame(ResponseJoined msg) {
+		_color = msg.getColor();
+		_modelListener.joinedGame(msg);
 	}
 
 	@Override
-	public void updateBoard(Board board, int color) {
-		_board = board;
-		_turnColor = color;
-		_modelListener.updateBoard(board, color);
+	public void updateBoard(ResponseBoardUpdate msg) {
+		_board = msg.getBoard();
+		_turnColor = msg.getColor();
+		_modelListener.updateBoard(msg);
 	}
 
 	@Override

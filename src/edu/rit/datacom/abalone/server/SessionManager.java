@@ -3,6 +3,8 @@ package edu.rit.datacom.abalone.server;
 import java.io.IOException;
 import java.util.HashMap;
 
+import edu.rit.datacom.abalone.common.message.ResponseJoined;
+
 public class SessionManager {
 
 	private static HashMap<String,AbaloneModel> _sessions = new HashMap<String,AbaloneModel>();
@@ -19,7 +21,7 @@ public class SessionManager {
 			proxy.setViewListener (model);
 		} else {
 			// Game was full.
-			// TODO handle this case
+			proxy.joinedGame(new ResponseJoined(-1));
 		}
 
 	}
