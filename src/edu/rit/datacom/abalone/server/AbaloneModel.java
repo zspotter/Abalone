@@ -2,6 +2,7 @@ package edu.rit.datacom.abalone.server;
 
 import edu.rit.datacom.abalone.common.AbaloneMessage.RequestJoin;
 import edu.rit.datacom.abalone.common.AbaloneMessage.RequestMove;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
@@ -38,6 +39,11 @@ public class AbaloneModel implements ViewListener{
 		} else if (blackPlayer == null) {
 			blackPlayer = player;
 			blackPlayer.gameJoined(new ResponseJoined(Board.BLACK));
+		}
+		if (isFull()) {
+			ResponseBoardUpdate msg = new ResponseBoardUpdate(board, playerColor);
+			blackPlayer.boardUpdated(msg);
+			whitePlayer.boardUpdated(msg);
 		}
 		return true;
 	}
