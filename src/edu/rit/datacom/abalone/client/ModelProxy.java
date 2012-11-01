@@ -5,8 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import edu.rit.datacom.abalone.common.Move;
 import edu.rit.datacom.abalone.common.ViewListener;
-import edu.rit.datacom.abalone.server.ViewProxy;
 
 public class ModelProxy implements ViewListener {
 
@@ -28,36 +28,21 @@ public class ModelProxy implements ViewListener {
 	}
 
 	@Override
-	public void joinGame(ViewProxy proxy, int session) throws IOException  {
-		_out.writeByte ('J');
-		_out.writeInt(session);
-		_out.flush();
+	public void joinGame(String gameid) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void sendMove(int x, int y, int color) throws IOException {
-		_out.writeByte('M');
-		_out.writeInt(x);
-		_out.writeInt(y);
-		_out.writeInt(color);
-		_out.flush();
+	public void requestMove(Move move) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void leaveGame(int gameid)  throws IOException {
-		_out.writeByte('L');
-		_out.writeInt(gameid);
-		_out.flush();
+	public void leaveGame() {
+		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void resetBoard(int gameid) throws IOException {
-		_out.writeByte('R');
-		_out.writeInt(gameid);
-		_out.flush();
 	}
 
 	private class ReaderThread
@@ -66,42 +51,10 @@ public class ModelProxy implements ViewListener {
 		@Override
 		public void run()
 		{
-			try
+			while(true)
 			{
-				while(true)
-				{
-					int x, y, color, session;
-					byte b = _in.readByte();
-					switch (b)
-					{
-					case 'J':
-						session = _in.readByte();
-						_modelClone.joinedGame(session);
-						break;
-					case 'U':
-						_modelClone.updateBoard();
-						break;
-					case 'R':
-						_modelClone.rejectMove();
-						break;
-
-					case 'L':
-						_modelClone.leaveGame();
-						break;
-					default:
-						// Ignore bad messages.
-						break;
-					}
-				}
-			}
-			catch (IOException exc){
-				try
-				{
-					_socket.close();
-				}
-				catch (IOException exc2){}
+				// TODO get input from server
 			}
 		}
 	}
-
 }

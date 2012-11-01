@@ -1,33 +1,38 @@
 package edu.rit.datacom.abalone.client;
 
-import java.io.IOException;
-
+import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
+import edu.rit.datacom.abalone.common.ViewListener;
 
 public class PlayerView implements ModelListener{
 
+	public void setViewListener(ViewListener viewListener) {
+		//TODO
+	}
+
 	@Override
-	public void joinedGame(int color) throws IOException {
+	public void joinedGame(int color) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void updateBoard() throws IOException {
+	public void updateBoard(Board board, int color) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void rejectMove() throws IOException {
+	public void rejectMove() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void leaveGame() throws IOException {
+	public void leaveGame() {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }
