@@ -85,13 +85,13 @@ public class ModelProxy implements ViewListener {
 					if (!(msg instanceof AbaloneMessage)) continue;
 
 					if (msg instanceof ResponseJoined) {
-						_modelClone.joinedGame((ResponseJoined) msg);
+						_modelClone.gameJoined((ResponseJoined) msg);
 					} else if (msg instanceof ResponseBoardUpdate) {
-						_modelClone.updateBoard((ResponseBoardUpdate) msg);
+						_modelClone.boardUpdated((ResponseBoardUpdate) msg);
 					} else if (msg instanceof ResponseLeftGame) {
-						_modelClone.leaveGame();
+						_modelClone.leftGame();
 					} else if (msg instanceof ResponseMoveRejected) {
-						_modelClone.rejectMove();
+						_modelClone.moveRejected();
 					}
 
 				} catch (IOException e) {

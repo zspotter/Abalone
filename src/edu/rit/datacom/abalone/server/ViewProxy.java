@@ -40,23 +40,23 @@ public class ViewProxy implements ModelListener {
 	}
 
 	@Override
-	public void joinedGame(ResponseJoined msg) {
+	public void gameJoined(ResponseJoined msg) {
 		// TODO
 
 	}
 
 	@Override
-	public void updateBoard(ResponseBoardUpdate msg) {
+	public void boardUpdated(ResponseBoardUpdate msg) {
 		// TODO
 	}
 
 	@Override
-	public void rejectMove() {
+	public void moveRejected() {
 		// TODO
 	}
 
 	@Override
-	public void leaveGame() {
+	public void leftGame() {
 		// TODO
 	}
 

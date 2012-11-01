@@ -29,30 +29,30 @@ public class ModelClone implements ModelListener {
 	}
 
 	@Override
-	public void joinedGame(ResponseJoined msg) {
+	public void gameJoined(ResponseJoined msg) {
 		_color = msg.getColor();
 
-		_modelListener.joinedGame(msg);
+		_modelListener.gameJoined(msg);
 	}
 
 	@Override
-	public void updateBoard(ResponseBoardUpdate msg) {
+	public void boardUpdated(ResponseBoardUpdate msg) {
 		_board = msg.getBoard();
 		_turnColor = msg.getColor();
 
-		_modelListener.updateBoard(msg);
+		_modelListener.boardUpdated(msg);
 	}
 
 	@Override
-	public void rejectMove() {
-		_modelListener.rejectMove();
+	public void moveRejected() {
+		_modelListener.moveRejected();
 	}
 
 	@Override
-	public void leaveGame() {
+	public void leftGame() {
 		_turnColor = -1;
 
-		_modelListener.leaveGame();
+		_modelListener.leftGame();
 	}
 
 }

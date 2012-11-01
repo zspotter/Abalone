@@ -18,7 +18,7 @@ public class PlayerView implements ModelListener{
 	}
 
 	@Override
-	public void joinedGame(ResponseJoined msg) {
+	public void gameJoined(ResponseJoined msg) {
 		if (!msg.hasJoined()) {
 			System.out.println("The requested game was full.");
 			quit();
@@ -29,20 +29,20 @@ public class PlayerView implements ModelListener{
 	}
 
 	@Override
-	public void updateBoard(ResponseBoardUpdate msg) {
+	public void boardUpdated(ResponseBoardUpdate msg) {
 		// TODO
 
 	}
 
 	@Override
-	public void rejectMove() {
+	public void moveRejected() {
 		// TODO Auto-generated method stub
 		System.out.println("Illegal move! Try again.");
 		promptMove();
 	}
 
 	@Override
-	public void leaveGame() {
+	public void leftGame() {
 		// TODO Auto-generated method stub
 		System.out.println("You have been disconnected by the server.");
 		quit();

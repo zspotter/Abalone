@@ -21,7 +21,7 @@ public class SessionManager {
 			proxy.setViewListener (model);
 		} else {
 			// Game was full.
-			proxy.joinedGame(new ResponseJoined(-1));
+			proxy.gameJoined(new ResponseJoined(-1));
 		}
 
 	}

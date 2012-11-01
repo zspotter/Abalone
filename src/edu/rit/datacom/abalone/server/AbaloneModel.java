@@ -185,10 +185,10 @@ public class AbaloneModel implements ViewListener{
 		}
 		if (whitePlayer == null) {
 			whitePlayer = player;
-			whitePlayer.joinedGame(new ResponseJoined(Board.WHITE));
+			whitePlayer.gameJoined(new ResponseJoined(Board.WHITE));
 		} else if (blackPlayer == null) {
 			blackPlayer = player;
-			blackPlayer.joinedGame(new ResponseJoined(Board.BLACK));
+			blackPlayer.gameJoined(new ResponseJoined(Board.BLACK));
 		}
 		return true;
 	}
