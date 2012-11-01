@@ -24,7 +24,43 @@ public class AbaloneModel implements ViewListener{
 		board = new Board();
 	}
 
-	public boolean makeMove(Move move) {
+	/**
+	 * @param player The player to add to the game.
+	 * @return True iff the player was added.
+	 */
+	public boolean addModelListener(ModelListener player) {
+		if (this.isFull()) {
+			return false;
+		}
+		if (whitePlayer == null) {
+			whitePlayer = player;
+			whitePlayer.gameJoined(new ResponseJoined(Board.WHITE));
+		} else if (blackPlayer == null) {
+			blackPlayer = player;
+			blackPlayer.gameJoined(new ResponseJoined(Board.BLACK));
+		}
+		return true;
+	}
+
+	@Override
+	public void joinGame(RequestJoin gameid) {
+		// Not implemented by AbaloneModel. Use addModelListener.
+	}
+
+	@Override
+	public void leaveGame() {
+		whitePlayer.leftGame();
+		blackPlayer.leftGame();
+		SessionManager.endGame(this);
+	}
+
+	@Override
+	public void requestMove(RequestMove msg) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private boolean makeMove(Move move) {
 		// Make sure the correct player is making a move.
 		if (move.getColor() != playerColor) return false;
 		// Make sure a valid number of marbles are being moved.
@@ -175,40 +211,5 @@ public class AbaloneModel implements ViewListener{
 		return whitePlayer != null & blackPlayer != null;
 	}
 
-	/**
-	 * @param player The player to add to the game.
-	 * @return True iff the player was added.
-	 */
-	public boolean addModelListener(ModelListener player) {
-		if (this.isFull()) {
-			return false;
-		}
-		if (whitePlayer == null) {
-			whitePlayer = player;
-			whitePlayer.gameJoined(new ResponseJoined(Board.WHITE));
-		} else if (blackPlayer == null) {
-			blackPlayer = player;
-			blackPlayer.gameJoined(new ResponseJoined(Board.BLACK));
-		}
-		return true;
-	}
-
-	@Override
-	public void joinGame(RequestJoin gameid) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void leaveGame() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void requestMove(RequestMove msg) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

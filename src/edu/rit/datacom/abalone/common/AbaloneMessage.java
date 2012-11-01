@@ -1,11 +1,18 @@
 package edu.rit.datacom.abalone.common;
 
+import java.io.Serializable;
+
 
 /**
  * The abstract super of all AbaloneMessages to be sent over the server. This
  * contains a handful of different messages to send.
  */
-public abstract class AbaloneMessage {
+public abstract class AbaloneMessage implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6953389229553924789L;
 
 	/**
 	 * Sent by the client to the server requesting to join a game. If the requested
@@ -13,6 +20,10 @@ public abstract class AbaloneMessage {
 	 */
 	public static class RequestJoin extends AbaloneMessage {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8628493509042750136L;
 		private String gameId;
 
 		/**
@@ -37,6 +48,11 @@ public abstract class AbaloneMessage {
 	 */
 	public static class RequestLeave extends AbaloneMessage {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 143077120046307502L;
+
 	}
 
 	/**
@@ -44,6 +60,10 @@ public abstract class AbaloneMessage {
 	 */
 	public static class RequestMove extends AbaloneMessage {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -8775665429552167899L;
 		private Move move;
 
 		public RequestMove(Move move) {
@@ -61,6 +81,10 @@ public abstract class AbaloneMessage {
 	 */
 	public static class ResponseBoardUpdate extends AbaloneMessage {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -2638209876028622783L;
 		private Board board;
 		private int turnColor;
 
@@ -85,6 +109,10 @@ public abstract class AbaloneMessage {
 	 */
 	public static class ResponseJoined extends AbaloneMessage {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1295026261526168921L;
 		private int color;
 
 		public ResponseJoined(int color) {
@@ -107,6 +135,11 @@ public abstract class AbaloneMessage {
 	 */
 	public static class ResponseLeftGame extends AbaloneMessage {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 7555245779656361292L;
+
 	}
 
 	/**
@@ -114,6 +147,11 @@ public abstract class AbaloneMessage {
 	 * rejected or illegal.
 	 */
 	public static class ResponseMoveRejected extends AbaloneMessage {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6361181595741278874L;
 
 	}
 

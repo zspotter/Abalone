@@ -66,6 +66,11 @@ public class Board {
 	/** Constant minimum length of the board. */
 	public static final int MIN = 5;
 
+	/** Number of marbles to be lost before losing. */
+	public static final int GOAL = 6;
+	/** Number of marbles each player starts with. */
+	public static final int START_COUNT = 14;
+
 
 	private final int[][] board;
 

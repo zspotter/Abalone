@@ -26,4 +26,8 @@ public class SessionManager {
 
 	}
 
+	public static void endGame(AbaloneModel game) {
+		_sessions.remove(game);
+	}
+
 }

@@ -13,6 +13,7 @@ import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseLeftGame;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseMoveRejected;
+import edu.rit.datacom.abalone.common.ModelListener;
 import edu.rit.datacom.abalone.common.ViewListener;
 
 public class ModelProxy implements ViewListener {
@@ -20,7 +21,7 @@ public class ModelProxy implements ViewListener {
 	private Socket _socket;
 	private ObjectOutputStream _out;
 	private ObjectInputStream _in;
-	private ModelClone _modelClone;
+	private ModelListener _modelListener;
 
 	public ModelProxy(Socket socket) throws IOException {
 		_socket = socket;
@@ -31,8 +32,8 @@ public class ModelProxy implements ViewListener {
 		new ReaderThread().start();
 	}
 
-	public void setModelListener(ModelClone model) {
-		_modelClone = model;
+	public void setModelListener(ModelListener listener) {
+		_modelListener = listener;
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class ModelProxy implements ViewListener {
 			_out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.err.println("/nError sending join request.");
+			System.err.println("\nError sending join request.");
 		}
 	}
 
@@ -53,7 +54,7 @@ public class ModelProxy implements ViewListener {
 			_out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.err.println("/nError sending move request.");
+			System.err.println("\nError sending move request.");
 		}
 	}
 
@@ -64,7 +65,7 @@ public class ModelProxy implements ViewListener {
 			_out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.err.println("/nError sending leave request.");
+			System.err.println("\nError sending leave request.");
 		}
 	}
 
@@ -85,13 +86,13 @@ public class ModelProxy implements ViewListener {
 					if (!(msg instanceof AbaloneMessage)) continue;
 
 					if (msg instanceof ResponseJoined) {
-						_modelClone.gameJoined((ResponseJoined) msg);
+						_modelListener.gameJoined((ResponseJoined) msg);
 					} else if (msg instanceof ResponseBoardUpdate) {
-						_modelClone.boardUpdated((ResponseBoardUpdate) msg);
+						_modelListener.boardUpdated((ResponseBoardUpdate) msg);
 					} else if (msg instanceof ResponseLeftGame) {
-						_modelClone.leftGame();
+						_modelListener.leftGame();
 					} else if (msg instanceof ResponseMoveRejected) {
-						_modelClone.moveRejected();
+						_modelListener.moveRejected();
 					}
 
 				} catch (IOException e) {

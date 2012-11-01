@@ -42,12 +42,10 @@ public class AbaloneClient {
 			System.exit(1);
 		}
 
-		ModelClone model = new ModelClone();
 		PlayerView view = new PlayerView ();
 
-		model.setModelListener (view);
 		view.setViewListener (proxy);
-		proxy.setModelListener (model);
+		proxy.setModelListener (view);
 		proxy.joinGame (new RequestJoin(session));
 	}
 
