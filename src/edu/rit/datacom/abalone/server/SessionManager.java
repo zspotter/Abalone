@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public class SessionManager {
 
-	private static HashMap<Integer,AbaloneModel> _sessions = new HashMap<Integer,AbaloneModel>();
+	private static HashMap<String,AbaloneModel> _sessions = new HashMap<String,AbaloneModel>();
 
-	public static void joinGame(ViewProxy proxy, int gameid) throws IOException {
+	public static void joinGame(ViewProxy proxy, String gameid) throws IOException {
 		AbaloneModel model = _sessions.get (gameid);
 		if (model == null) // if there is no game yet
 		{

@@ -191,7 +191,7 @@ public class AbaloneModel implements ViewListener{
 	}
 
 	@Override
-	public void joinGame(int gameid) {
+	public void joinGame(String gameid) {
 		// TODO Auto-generated method stub
 
 	}

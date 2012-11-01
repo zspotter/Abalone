@@ -98,21 +98,22 @@ public class ViewProxy implements ModelListener {
 			{
 				while(true)
 				{
-					int x, y, color, session;
-					byte b = _in.readByte();
+
+					// TODO implement with ObjectInputStream
+
+					get next message
 
 					// If this client hasn't joined the game yet, only accept
 					// join requests.
 					if (_viewListener == null) {
-						if (b == MSG_JOIN) {
-							session = _in.readByte();
-							SessionManager.joinGame(ViewProxy.this, session);
+						if ( message is a join game message ) {
+							SessionManager.joinGame(ViewProxy.this, session name);
 						}
-						// Skip switch statement.
+						// Skip other message checks.
 						continue;
 					}
 
-					// TODO listen for ViewListener messages
+					// TODO listen for other ViewListener messages
 				}
 			}
 			catch (IOException exc)

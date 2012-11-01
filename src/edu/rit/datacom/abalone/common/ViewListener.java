@@ -10,9 +10,10 @@ public interface ViewListener {
 
 	/**
 	 * Called when a player attempts to join a game.
-	 * @param gameid The id of the game the player has requested.
+	 * @param gameName The name of the game the player has requested. A new
+	 * 	game will be created if the given one doesn't exist.
 	 */
-	public void joinGame(int gameid);
+	public void joinGame(String gameName);
 
 	/**
 	 * Called when the player attempts a move.
