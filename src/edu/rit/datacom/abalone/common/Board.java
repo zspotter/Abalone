@@ -176,7 +176,7 @@ public class Board implements Serializable {
 	 * @return True iff the given coord lies on the board.
 	 */
 	public boolean onBoard(int x, int y) {
-		return (x >= startOf(y) && x <= endOf(y));
+		return (y >= 0 && y < MAX && x >= startOf(y) && x <= endOf(y));
 	}
 
 	/**

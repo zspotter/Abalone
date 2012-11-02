@@ -54,10 +54,16 @@ public abstract class AbaloneMessage implements Serializable {
 		private static final long serialVersionUID = -8775665429552167899L;
 		private Move move;
 
+		/**
+		 * @param move The move to send.
+		 */
 		public RequestMove(Move move) {
 			this.move = move;
 		}
 
+		/**
+		 * @return the move
+		 */
 		public Move getMove() {
 			return move;
 		}
@@ -73,6 +79,11 @@ public abstract class AbaloneMessage implements Serializable {
 		private Board board;
 		private int turnColor;
 
+		/**
+		 * @param board The game board
+		 * @param turnColor The color of the next turn. Color is Board.EMPTY
+		 * 	if game is over.
+		 */
 		public ResponseBoardUpdate(Board board, int turnColor) {
 			this.board = board;
 			this.turnColor = turnColor;

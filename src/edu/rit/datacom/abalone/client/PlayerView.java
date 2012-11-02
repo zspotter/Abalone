@@ -92,21 +92,22 @@ public class PlayerView implements ModelListener{
 	}
 
 	private void displayBoard() {
-		// Print who's turn it is.
-		if (_turnColor == _playerColor) {
-			System.out.println("It is your ("+_colorName+"'s) move.");
-		} else {
-			System.out.println("It is "+_opponentColorName+"'s move. Please wait...");
-		}
 		System.out.println("---------");
 		// Print score.
-		System.out.println("Black marbles remaining: " +
-				(Math.max(Board.START_COUNT - _board.countBlack(), Board.GOAL))+"/"+Board.GOAL);
-		System.out.println("White marbles remaining: " +
-				(Math.max(Board.START_COUNT - _board.countWhite(), Board.GOAL))+"/"+Board.GOAL);
+		System.out.println("Black marbles (@) remaining: " +
+				(Board.GOAL - Board.START_COUNT + _board.countBlack())+"/"+Board.GOAL);
+		System.out.println("White marbles (O) remaining: " +
+				(Board.GOAL - Board.START_COUNT + _board.countWhite())+"/"+Board.GOAL);
 		// Print board.
 		System.out.println();
 		_board.printBoard();
+		System.out.println();
+		// Print who's turn it is.
+		if (_turnColor == _playerColor) {
+			System.out.println("It is your ("+_colorName+"'s) move.");
+		} else if (_turnColor != Board.EMPTY){
+			System.out.println("It is "+_opponentColorName+"'s move. Please wait...");
+		}
 	}
 
 	private void promptMove() {
@@ -141,12 +142,12 @@ public class PlayerView implements ModelListener{
 		}
 		// Prompt for direction.
 		System.out.println("\nEnter a direction to push:");
-		System.out.println(" 0: SW");
-		System.out.println(" 1: W");
-		System.out.println(" 2: NW");
-		System.out.println(" 3: SE");
-		System.out.println(" 4: E");
-		System.out.println(" 5: NE");
+		System.out.println("    2:NW     5:NE");
+		System.out.println("         \\ /");
+		System.out.println("   1:W  - + -  4:E");
+		System.out.println("         / \\");
+		System.out.println("    0:SW     3:SE");
+		System.out.println();
 
 		while(true) {
 			System.out.print("Direction: ");

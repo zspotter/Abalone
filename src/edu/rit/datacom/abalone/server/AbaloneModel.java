@@ -3,6 +3,7 @@ package edu.rit.datacom.abalone.server;
 import edu.rit.datacom.abalone.common.AbaloneMessage.RequestJoin;
 import edu.rit.datacom.abalone.common.AbaloneMessage.RequestMove;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseGameOver;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
@@ -11,7 +12,7 @@ import edu.rit.datacom.abalone.common.ViewListener;
 
 public class AbaloneModel implements ViewListener{
 
-	// Maximum number of the player's marbles that can be moved per turn.
+	/** Maximum number of the player's marbles that can be moved per turn. */
 	public static final int MAX_MARBLES = 3;
 
 	private int playerColor = Board.BLACK;
@@ -64,9 +65,23 @@ public class AbaloneModel implements ViewListener{
 	public void requestMove(RequestMove msg) {
 		boolean success = makeMove(msg.getMove());
 		if (success) {
+			// Check end-game conditions.
+			int winner = -1;
+			if (board.countBlack() <= Board.START_COUNT - Board.GOAL) {
+				winner = Board.WHITE;
+				playerColor = Board.EMPTY;
+			} else if (board.countBlack() <= Board.START_COUNT - Board.GOAL) {
+				winner = Board.BLACK;
+				playerColor = Board.EMPTY;
+			}
 			ResponseBoardUpdate response = new ResponseBoardUpdate(board, playerColor);
 			blackPlayer.boardUpdated(response);
 			whitePlayer.boardUpdated(response);
+			if (winner == Board.BLACK || winner == Board.WHITE) {
+				ResponseGameOver gameOver = new ResponseGameOver(winner);
+				blackPlayer.gameOver(gameOver);
+				whitePlayer.gameOver(gameOver);
+			}
 		} else {
 			if (msg.getMove().getColor() == Board.BLACK) {
 				blackPlayer.moveRejected();
@@ -76,15 +91,21 @@ public class AbaloneModel implements ViewListener{
 		}
 	}
 
+	/**
+	 * Attempts to make the given move.
+	 * @param move to attempt.
+	 * @return True iff the board was updated.
+	 */
 	private boolean makeMove(Move move) {
 		// Make sure the correct player is making a move.
 		if (move.getColor() != playerColor) return false;
 		// Make sure a valid number of marbles are being moved.
 		if (move.getMarbles().length > MAX_MARBLES
 				|| move.getMarbles().length <= 0) return false;
-		// Make sure all the marbles are the right color.
+		// Make sure all the marbles are the right color and on the board.
 		for (int[] marble : move.getMarbles()) {
-			if (board.get(marble[0], marble[1]) != move.getColor()) {
+			if (!board.onBoard(marble[0], marble[1])
+					|| board.get(marble[0], marble[1]) != move.getColor()) {
 				return false;
 			}
 		}
@@ -172,18 +193,21 @@ public class AbaloneModel implements ViewListener{
 			copy.set(tail[0], tail[1], Board.EMPTY);
 			int[] newHead = Board.getRelativeCoords(head[0], head[1], dir);
 			if (copy.onBoard(newHead[0], newHead[1])) {
-				copy.setRelative(head[0], head[1], dir, playerColor);
+				copy.set(newHead[0], newHead[1], playerColor);
 			}
 		} else {
 			// Broadside slide.
 			for (int[] marble : marbles) {
-				if (copy.getRelative(marble[0], marble[1], dir) != Board.EMPTY) {
+				int[] rel = Board.getRelativeCoords(marble[0], marble[1], dir);
+				if (copy.onBoard(rel[0], rel[1]) && copy.get(rel[0], rel[1]) != Board.EMPTY) {
 					// Not an empty dest spot. Bad move!
 					return false;
 				}
 				copy.set(marble[0], marble[1], Board.EMPTY);
-				int[] relCoords = Board.getRelativeCoords(marble[0], marble[1], dir);
-				copy.set(relCoords[0], relCoords[1], move.getColor());
+
+				if (copy.onBoard(rel[0], rel[1])) {
+					copy.set(rel[0], rel[1], move.getColor());
+				}
 			}
 		}
 
@@ -214,10 +238,6 @@ public class AbaloneModel implements ViewListener{
 			if (!adjacent) return false;
 		}
 		return true;
-	}
-
-	public Board getBoard() {
-		return board;
 	}
 
 	/**

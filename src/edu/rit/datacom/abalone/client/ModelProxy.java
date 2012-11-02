@@ -43,8 +43,6 @@ public class ModelProxy implements ViewListener {
 			_out.writeObject(msg);
 			_out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("\nError sending join request.");
 		}
 	}
 
@@ -54,8 +52,6 @@ public class ModelProxy implements ViewListener {
 			_out.writeObject(msg);
 			_out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("\nError sending move request.");
 		}
 	}
 
@@ -65,8 +61,6 @@ public class ModelProxy implements ViewListener {
 			_out.writeObject(new RequestLeave());
 			_out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("\nError sending leave request.");
 		}
 	}
 
@@ -98,9 +92,7 @@ public class ModelProxy implements ViewListener {
 					}
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			} finally {
 				_modelListener.leftGame();
 			}

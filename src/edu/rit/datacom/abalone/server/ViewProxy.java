@@ -44,8 +44,6 @@ public class ViewProxy implements ModelListener {
 			_out.writeObject(msg);
 			_out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("\nError sending joined message.");
 		}
 
 	}
@@ -56,8 +54,6 @@ public class ViewProxy implements ModelListener {
 			_out.writeObject(msg);
 			_out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("\nError sending updated board message.");
 		}
 	}
 
@@ -67,8 +63,6 @@ public class ViewProxy implements ModelListener {
 			_out.writeObject(new ResponseMoveRejected());
 			_out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("\nError sending rejected move message.");
 		}
 	}
 
@@ -78,8 +72,6 @@ public class ViewProxy implements ModelListener {
 			_out.writeObject(new ResponseLeftGame());
 			_out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("\nError sending leave game message.");
 		}
 	}
 
@@ -89,8 +81,6 @@ public class ViewProxy implements ModelListener {
 			_out.writeObject(msg);
 			_out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("\nError sending winning game message.");
 		}
 	}
 
@@ -129,11 +119,7 @@ public class ViewProxy implements ModelListener {
 					}
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} finally {
 				if (_viewListener != null) _viewListener.leaveGame();
 			}
