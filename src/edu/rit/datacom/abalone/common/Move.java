@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 /**
  * Represents an immutable player move.
- * 
- * @author Zachary Potter
  *
  */
 public class Move implements Serializable {

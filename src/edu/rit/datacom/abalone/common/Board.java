@@ -43,9 +43,6 @@ import java.io.Serializable;
  *         W  - + -  E
  *             / \
  *          SW     SE
- * 
- * 
- * @author Zachary Potter
  *
  */
 public class Board implements Serializable {

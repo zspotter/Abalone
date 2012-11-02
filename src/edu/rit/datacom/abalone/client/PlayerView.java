@@ -159,8 +159,9 @@ public class PlayerView implements ModelListener{
 				System.out.println("Input not an int.");
 			}
 		}
+		System.out.println();
 		// Create Move and send to ModelProxy.
-		Move move = new Move(_playerColor, x, Arrays.copyOfRange(coords, 0, num-1));
+		Move move = new Move(_playerColor, x, Arrays.copyOfRange(coords, 0, num));
 		_viewListener.requestMove(new RequestMove(move));
 	}
 
