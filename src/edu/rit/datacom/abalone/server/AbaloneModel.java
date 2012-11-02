@@ -2,6 +2,7 @@ package edu.rit.datacom.abalone.server;
 
 import edu.rit.datacom.abalone.common.AbaloneMessage.RequestJoin;
 import edu.rit.datacom.abalone.common.AbaloneMessage.RequestMove;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
@@ -29,15 +30,20 @@ public class AbaloneModel implements ViewListener{
 	 * @return True iff the player was added.
 	 */
 	public boolean addModelListener(ModelListener player) {
-		if (this.isFull()) {
+		if (isFull()) {
 			return false;
 		}
-		if (whitePlayer == null) {
-			whitePlayer = player;
-			whitePlayer.gameJoined(new ResponseJoined(Board.WHITE));
-		} else if (blackPlayer == null) {
+		if (blackPlayer == null) {
 			blackPlayer = player;
 			blackPlayer.gameJoined(new ResponseJoined(Board.BLACK));
+		} else if (whitePlayer == null) {
+			whitePlayer = player;
+			whitePlayer.gameJoined(new ResponseJoined(Board.WHITE));
+		}
+		if (isFull()) {
+			ResponseBoardUpdate msg = new ResponseBoardUpdate(board, playerColor);
+			blackPlayer.boardUpdated(msg);
+			whitePlayer.boardUpdated(msg);
 		}
 		return true;
 	}
@@ -56,8 +62,18 @@ public class AbaloneModel implements ViewListener{
 
 	@Override
 	public void requestMove(RequestMove msg) {
-		// TODO Auto-generated method stub
-
+		boolean success = makeMove(msg.getMove());
+		if (success) {
+			ResponseBoardUpdate response = new ResponseBoardUpdate(board, playerColor);
+			blackPlayer.boardUpdated(response);
+			whitePlayer.boardUpdated(response);
+		} else {
+			if (msg.getMove().getColor() == Board.BLACK) {
+				blackPlayer.moveRejected();
+			} else if (msg.getMove().getColor() == Board.WHITE) {
+				whitePlayer.moveRejected();
+			}
+		}
 	}
 
 	private boolean makeMove(Move move) {

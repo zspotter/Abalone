@@ -75,10 +75,9 @@ public class ModelProxy implements ViewListener {
 		@Override
 		public void run()
 		{
-			while(true)
-			{
-				try {
-
+			try {
+				while(true)
+				{
 					// Get input from server.
 					Object msg = _in.readObject();
 
@@ -94,12 +93,13 @@ public class ModelProxy implements ViewListener {
 					} else if (msg instanceof ResponseMoveRejected) {
 						_modelListener.moveRejected();
 					}
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} finally {
+				_modelListener.leftGame();
 			}
 		}
 	}

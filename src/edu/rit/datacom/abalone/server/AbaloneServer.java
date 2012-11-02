@@ -43,7 +43,6 @@ public class AbaloneServer {
 			try {
 				Socket socket = serversocket.accept();
 				ViewProxy proxy = new ViewProxy (socket);
-				proxy.setViewListener (manager);
 			} catch (IOException e) {
 				// Ignore connections that fail for whatever reason.
 			}

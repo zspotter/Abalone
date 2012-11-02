@@ -3,6 +3,10 @@ Abalone
 
 Implementation of the marble board game Abalone for RIT's Data Communication & Networks I course.
 
+Authors:
+ + Zachary Potter
+ + Channon Price
+
 Compiling
 ---------
 Enter the Abalone root directory.

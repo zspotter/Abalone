@@ -91,9 +91,9 @@ public class ViewProxy implements ModelListener {
 		@Override
 		public void run()
 		{
-			while(true)
-			{
-				try {
+			try {
+				while(true)
+				{
 					// Get next message from client.
 					Object msg = _in.readObject();
 
@@ -115,14 +115,15 @@ public class ViewProxy implements ModelListener {
 					} else if (msg instanceof RequestLeave) {
 						_viewListener.leaveGame();
 					}
-
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				if (_viewListener != null) _viewListener.leaveGame();
 			}
 		}
 	}

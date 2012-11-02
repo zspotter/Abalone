@@ -3,12 +3,9 @@ package edu.rit.datacom.abalone.server;
 import java.io.IOException;
 import java.util.HashMap;
 
-import edu.rit.datacom.abalone.common.AbaloneMessage.RequestJoin;
-import edu.rit.datacom.abalone.common.AbaloneMessage.RequestMove;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
-import edu.rit.datacom.abalone.common.ViewListener;
 
-public class SessionManager implements ViewListener {
+public class SessionManager {
 
 	private static HashMap<String,AbaloneModel> _sessions = new HashMap<String,AbaloneModel>();
 
@@ -32,11 +29,5 @@ public class SessionManager implements ViewListener {
 	public static void endGame(AbaloneModel game) {
 		_sessions.remove(game);
 	}
-
-	public void joinGame(RequestJoin msg) {}
-
-	public void requestMove(RequestMove msg) {}
-
-	public void leaveGame() {}
 
 }

@@ -70,7 +70,7 @@ public abstract class AbaloneMessage implements Serializable {
 			this.move = move;
 		}
 
-		public Object getMove() {
+		public Move getMove() {
 			return move;
 		}
 
