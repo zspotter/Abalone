@@ -1,6 +1,7 @@
 package edu.rit.datacom.abalone.common;
 
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseGameOver;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 
 
@@ -35,6 +36,11 @@ public interface ModelListener {
 	 * either the game ended or the other player left.
 	 */
 	public void leftGame();
+
+	/**
+	 * Called when the game has ended and will no longer take input.
+	 */
+	public void gameOver(ResponseGameOver msg);
 
 
 }

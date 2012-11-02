@@ -9,9 +9,6 @@ import java.io.Serializable;
  */
 public abstract class AbaloneMessage implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6953389229553924789L;
 
 	/**
@@ -20,9 +17,6 @@ public abstract class AbaloneMessage implements Serializable {
 	 */
 	public static class RequestJoin extends AbaloneMessage {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 8628493509042750136L;
 		private String gameId;
 
@@ -48,9 +42,6 @@ public abstract class AbaloneMessage implements Serializable {
 	 */
 	public static class RequestLeave extends AbaloneMessage {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 143077120046307502L;
 
 	}
@@ -60,9 +51,6 @@ public abstract class AbaloneMessage implements Serializable {
 	 */
 	public static class RequestMove extends AbaloneMessage {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = -8775665429552167899L;
 		private Move move;
 
@@ -81,9 +69,6 @@ public abstract class AbaloneMessage implements Serializable {
 	 */
 	public static class ResponseBoardUpdate extends AbaloneMessage {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = -2638209876028622783L;
 		private Board board;
 		private int turnColor;
@@ -109,9 +94,6 @@ public abstract class AbaloneMessage implements Serializable {
 	 */
 	public static class ResponseJoined extends AbaloneMessage {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = -1295026261526168921L;
 		private int color;
 
@@ -135,9 +117,6 @@ public abstract class AbaloneMessage implements Serializable {
 	 */
 	public static class ResponseLeftGame extends AbaloneMessage {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 7555245779656361292L;
 
 	}
@@ -148,10 +127,22 @@ public abstract class AbaloneMessage implements Serializable {
 	 */
 	public static class ResponseMoveRejected extends AbaloneMessage {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 6361181595741278874L;
+
+	}
+
+	public static class ResponseGameOver extends AbaloneMessage {
+
+		private static final long serialVersionUID = 1912916064577291268L;
+		int color;
+
+		public ResponseGameOver(int winningColor) {
+			color = winningColor;
+		}
+
+		public int getWinningColor() {
+			return color;
+		}
 
 	}
 

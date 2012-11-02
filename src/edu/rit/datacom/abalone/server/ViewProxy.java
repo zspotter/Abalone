@@ -10,6 +10,7 @@ import edu.rit.datacom.abalone.common.AbaloneMessage.RequestJoin;
 import edu.rit.datacom.abalone.common.AbaloneMessage.RequestLeave;
 import edu.rit.datacom.abalone.common.AbaloneMessage.RequestMove;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseGameOver;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseLeftGame;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseMoveRejected;
@@ -79,6 +80,17 @@ public class ViewProxy implements ModelListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("\nError sending leave game message.");
+		}
+	}
+
+	@Override
+	public void gameOver(ResponseGameOver msg) {
+		try {
+			_out.writeObject(msg);
+			_out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.err.println("\nError sending winning game message.");
 		}
 	}
 

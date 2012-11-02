@@ -1,9 +1,11 @@
 package edu.rit.datacom.abalone.client;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import edu.rit.datacom.abalone.common.AbaloneMessage.RequestMove;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseBoardUpdate;
+import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseGameOver;
 import edu.rit.datacom.abalone.common.AbaloneMessage.ResponseJoined;
 import edu.rit.datacom.abalone.common.Board;
 import edu.rit.datacom.abalone.common.ModelListener;
@@ -78,6 +80,17 @@ public class PlayerView implements ModelListener{
 		quit();
 	}
 
+	@Override
+	public void gameOver(ResponseGameOver msg) {
+		if (msg.getWinningColor() == _playerColor)
+			System.out.println("You win! Oh boy!");
+		else
+			System.out.println("You lose! :(");
+
+		quit();
+
+	}
+
 	private void displayBoard() {
 		// Print who's turn it is.
 		if (_turnColor == _playerColor) {
@@ -127,7 +140,7 @@ public class PlayerView implements ModelListener{
 			num++;
 		}
 		// Prompt for direction.
-		System.out.println("Enter a direction to push:");
+		System.out.println("\nEnter a direction to push:");
 		System.out.println(" 0: SW");
 		System.out.println(" 1: W");
 		System.out.println(" 2: NW");
@@ -147,14 +160,13 @@ public class PlayerView implements ModelListener{
 			}
 		}
 		// Create Move and send to ModelProxy.
-		Move move = new Move(_playerColor, x, coords);
+		Move move = new Move(_playerColor, x, Arrays.copyOfRange(coords, 0, num-1));
 		_viewListener.requestMove(new RequestMove(move));
 	}
 
 	private void quit() {
 		System.out.println("Bye!");
-		System.exit(0); // Probably want to change this... TODO
+		System.exit(0);
 	}
-
 
 }
